@@ -155,4 +155,4 @@ Project Link: [https://github.com/Azzedine-prog/MCU-TOOLS](https://github.com/Az
 [license-url]: https://github.com/Azzedine-prog/MCU-TOOLS/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/azzedine-lakhdar/
-[product-screenshot]: images/example1.png
+[product-screenshot]: images/example1.PNG
