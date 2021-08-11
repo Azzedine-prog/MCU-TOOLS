@@ -63,7 +63,7 @@ int main(int argc,char**argv){
 	linked_list_string* my_arguments = argument_init();
 	add_argument_with_help_and_action("freq","f",0,INT,"specifying frequence (default 8)",&freq_fun,NULL,NULL,my_arguments);
 	add_argument_with_help_and_action("pipe","p",0,INT,"specifying pipeline architecture (default 4)",&pipe_fun,NULL,NULL,my_arguments);
-	add_argument_with_help_and_action("version","v",0,BOOL,"for app version ",NULL,NULL,&version,my_arguments);
+	/*add_argument_with_help_and_action("version","v",0,BOOL,"for app version ",NULL,NULL,&version,my_arguments);*/
 	add_argument_with_help_and_action("unit","u",0,CHAR,"specifying unit s: seconds or m for milliseconds(default s)",NULL,&unit,NULL,my_arguments);
 	add_argument_with_help_and_action("output","o",0,INT,"specifying output frqeuncy wanted ",&output,NULL,NULL,my_arguments);
 	add_argument_with_help_and_action("precision","j",0,INT,"specifying precision of output frequency (default 10)",&precision,NULL,NULL,my_arguments);
@@ -74,15 +74,15 @@ int main(int argc,char**argv){
 		return 1;
 	}
 	node_string* freq_node = get_node_by_self("freq",my_arguments);
-	if(get_node_by_self("version",my_arguments)->status == True){
+	/*if(get_node_by_self("version",my_arguments)->status == True){
 		return 0;
-	}
+	}*/
 	node_string* unit_node = get_node_by_self("u",my_arguments);
 	node_string* pipe_node = get_node_by_self("p",my_arguments);
 	node_string* output_node = get_node_by_self("o",my_arguments);
 	node_string* precision_node = get_node_by_self("j",my_arguments);
 	int freq=8,pipe = 4,unit = 1000,delay=0,precision = 10;
-	char* unit_char;
+	//char* unit_char;
 	if(freq_node->status == True){
 		//printf("true1\n");
 		freq = freq_node->int_value;
@@ -106,38 +106,29 @@ int main(int argc,char**argv){
 		}
 	}
 	if(output_node->status == True){
-		//clock_t t,base;
-		//base = clock();
 		int out = output_node->int_value;
 		srand(time(0));
-		int p_pos = (rand())%4,n=(rand())%433,m=(rand())%64,tmp=0;
-		unsigned long long counter = 0,counter_tmp=0,advancement=1;
+		int p_pos = 0,n=192,m=freq,tmp=0;
 		int p_array[] = {2,4,6,8};
 		printf("input frequency : %d Mhz,output wanted : %dMhz,precision : %d\n",freq,out,precision);
-		//printf("for output frequency %d Mhz , n = %d,m = %d,p = %d\n",out,n,m,p_array[p_pos]);
 		while(((out-tmp)>precision) || ((out-tmp)<0)){
-			//t = clock();
-			if(counter == 10000000000){
-				printf("we didn't find a combination for your number \n try again");
-				return 1;
+			if(n == 432){
+				n = 192;
+				if(p_pos == 3){
+					printf("no combination can satisfy your conditions\n");
+					return 1;
+				}
+				else
+					p_pos = p_pos+1;
 			}
-			if((counter-counter_tmp)>100000){
-			counter_tmp = counter;
-			fflush(stdout);
-			printf("(%llu) --> outfreq = %dMhz,n = %d,m = %d,p = %d\r",counter,tmp,n,m,p_array[p_pos]);
-			}
-			counter = counter + 1;
-			srand(time(0));
-			p_pos = (rand())%4;
-			//srand(time(0));
-			n=(rand())%433;
-			//srand(time(0));
-			m=(rand())%64;
-			if((m != 0))
+			else
+			n=n+1;
 				tmp = out_freq(m,n,p_array[p_pos],freq);
 		}
 		fflush(stdout);
 		printf("<--[for output frequency %d Mhz , n = %d,m = %d,p = %d]-->\n",tmp,n,m,p_array[p_pos]);
+		printf("<--[in binary n = %d,m = %d,p = %d    ]-->\n",binary(n),binary(m),binary(p_array[p_pos]));
+		printf("<--[in hexadecimal n = %s,m = %s,p = %s    ]-->\n",hexadecimal(n),hexadecimal(m),hexadecimal(p_array[p_pos]));
 		return 0;
 	}
 	printf("frequency : %d Mhz , pipeline : %d, unit : %d ms\n",freq,pipe,unit);

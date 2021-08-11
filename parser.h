@@ -16,7 +16,7 @@
 #define SIZE_STRING 8
 #endif
 #ifndef SIZE_DETAIL
-#define SIZE_DETAIL 40
+#define SIZE_DETAIL 80
 #endif
 typedef enum bool{
     True,False
@@ -65,5 +65,6 @@ char str_cmp(char* destination,char* source);
 int string_to_int(char* number_string);
 int le_n(char* string);
 int po_w(int base,int power);
-
+int binary(int decimal);
+char* hexadecimal(int decimal);
 

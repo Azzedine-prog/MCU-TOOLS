@@ -283,3 +283,36 @@ int string_to_int(char* number_string){
   }
   return number_int;
 }
+int binary(int decimal){
+        int binary=0,i=0;
+        //int decimal;
+        //printf("------ d : %d , base : %d ----------------\n",decimal);
+        while(decimal != 0){
+                binary =binary+(decimal%2)*po_w(10,i);
+                i++;
+                //printf("decimal : %d , binary : %d\n",decimal,binary);
+                decimal = decimal/2;
+        }
+        //printf("----------------\n");
+        return binary;
+}
+char* hexadecimal(int decimal){
+        int binary=0,i=0,tmp_decimal = decimal;
+        char hexadecimal[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+        while(tmp_decimal != 0){
+            i++;
+            tmp_decimal = tmp_decimal/16;
+        }
+        char* tmp = malloc((i+1)*sizeof(char));
+        char* result = tmp; 
+        tmp = tmp+i;
+        *tmp = '\0';
+        tmp--;
+        while(decimal != 0){
+                binary = decimal%16;
+                *tmp = *(hexadecimal+binary);
+                tmp--;
+                decimal = decimal/16;
+        }
+        return result;
+}
